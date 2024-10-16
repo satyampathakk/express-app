@@ -1,15 +1,21 @@
 import Data from '../models/model.js'
+import bcrypt from 'bcrypt'
 export const getreq = async (req, res) => {
     const data=await Data.find()
     res.json(data);
 };
 export const postreq=async(req,res)=>{
-    console.log(req.body)
-    const {name,message}=req.body
-    const data=new Data({name,message})
+    let {username,password}=req.body
+    const exist=await Data.findOne({username:username})
+    if(exist){
+        return res.status(400).json({message:'User already exists'})
+    }
+   password =await bcrypt.hash(password,4)
+    const data=new Data({username,password})
     await data.save()
+    console.log(data)
     res.json(data)
-
+    
 }
 export const delreq=async (req,res)=>{
     const {id}=req.body

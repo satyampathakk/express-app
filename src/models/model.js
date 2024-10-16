@@ -6,9 +6,8 @@ const monobj=await mongoose.connect(url, { autoIndex: false });
 console.log(monobj.connection.readyState)
 const UserSchema =new mongoose.Schema(
     {
-        name: String,
-        message:String,
-
+        username: { type: String, required: true, unique: true },
+        password:{ type: String, required: true}
     }
 )
 export default  mongoose.model('User',UserSchema)
