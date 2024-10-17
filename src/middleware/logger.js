@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import Data from '../models/model.js';
+import jwt from 'jsonwebtoken'
 
 const logger = async (req, res, next) => {
     try {

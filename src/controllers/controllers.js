@@ -1,8 +1,12 @@
 import Data from '../models/model.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken';
 export const getreq = async (req, res) => {
-    const data=await Data.find()
-    res.json(data);
+    const {username}=req.body
+    const token=jwt.sign({username},process.env.SECRET_KEY,{expiresIn:'1d'})
+    console.log(token)
+    const a=Math.random()*10
+    res.json({message:`lucky number is ${a} `,token:token});
 };
 export const postreq=async(req,res)=>{
     let {username,password}=req.body
@@ -15,6 +19,7 @@ export const postreq=async(req,res)=>{
     await data.save()
     console.log(data)
     res.json(data)
+    
     
 }
 export const delreq=async (req,res)=>{
